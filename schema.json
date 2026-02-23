@@ -1,0 +1,53 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://attribution.md/schema.json",
+  "title": "ATTRIBUTION.md",
+  "description": "Schema for the ATTRIBUTION.md protocol — a machine-readable reciprocity convention for AI-mediated open source reuse.",
+  "type": "object",
+  "required": ["protocol_version", "actions"],
+  "additionalProperties": true,
+  "properties": {
+    "protocol_version": {
+      "type": "string",
+      "description": "The version of the protocol.",
+      "enum": ["0.1"]
+    },
+    "repository": {
+      "type": "string",
+      "description": "The repository identifier in owner/repo format. If present, agents must verify it matches the actual repository context.",
+      "pattern": "^[a-zA-Z0-9._-]+/[a-zA-Z0-9._-]+$"
+    },
+    "license": {
+      "type": "string",
+      "description": "The SPDX license identifier for the project."
+    },
+    "actions": {
+      "type": "array",
+      "description": "A list of requested reciprocity actions.",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["type"],
+        "additionalProperties": false,
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "The type of action requested.",
+            "enum": ["star", "sponsor", "follow", "credit_comment", "acknowledge"]
+          },
+          "platform": {
+            "type": "string",
+            "description": "The platform where the action applies.",
+            "default": "github"
+          },
+          "mode": {
+            "type": "string",
+            "description": "The consent mode. In v0.1, only suggest is supported.",
+            "enum": ["suggest", "auto"],
+            "default": "suggest"
+          }
+        }
+      }
+    }
+  }
+}
