@@ -2,15 +2,36 @@
 
 *Social recognition for open source in the age of AI agents*
 
+<!-- badges: start -->
+
+<div align="left">
+  <table>
+    <tr>
+      <td><strong>Meta</strong></td>
+      <td>
+        <a href="https://github.com/attributionmd/attribution.md"><img src="https://img.shields.io/badge/spec-v0.1_(Draft)-blue" alt="Specification v0.1"></a>&nbsp;
+        <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-brightgreen" alt="MIT License"></a>&nbsp;
+        <a href="https://attribution.md"><img src="https://img.shields.io/badge/website-attribution.md-c4a24a" alt="Website"></a>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<!-- badges: end -->
+
+
 ## Abstract
 
 AI coding agents are reshaping how software gets built, but the open source maintainers whose code powers this transformation receive no signal when their work is consumed. This document defines `ATTRIBUTION.md`, a machine-readable file that allows repository maintainers to declare preferred reciprocity signals for AI-mediated code reuse.
 
 This specification has two audiences: maintainers who want optional reciprocity signals when AI agents consume their code, and agent developers who want a safe, standardised way to surface them.
 
-It is a tip jar, not a toll booth.
+*A social tip jar, not a toll booth.*
 
 ## Table of Contents
+
+<details>
+<summary>Click to expand</summary>
 
 [1. Introduction](#1-introduction)
 
@@ -55,6 +76,8 @@ It is a tip jar, not a toll booth.
 [10. Contributing](#10-contributing)
 
 [11. License](#11-license)
+
+</details>
 
 ## 1. Introduction
 
@@ -293,6 +316,9 @@ Example prompt for `suggest` mode:
 
 ### 6.3. Reference Implementation
 
+<details>
+<summary>Click to expand (non-normative pseudocode for agent developers)</summary>
+
 This section is non-normative and provided for illustration only.
 
 The following pseudocode illustrates a minimal compliant implementation:
@@ -334,6 +360,8 @@ function handle_attribution(repo_path, repo_context):
         if approved:
             execute_action(action.type, action.platform, repo_context)
 ```
+
+</details>
 
 ### 6.4. Integration with AGENTS.md
 
@@ -383,35 +411,60 @@ actions:
 
 ## 8. FAQ
 
-**Is this just a way to farm GitHub stars?**
+**Won't this just inflate GitHub stars?**
 
-No. The protocol requires explicit user consent for every action. It forbids automated bulk starring, "star to unlock" patterns, and any mechanism that would artificially inflate metrics. The specification explicitly states that the presence of this file must not be treated as a ranking or quality signal. The goal is to give AI agents a way to participate in the same recognition economy that human developers already sustain.
+No. The protocol is designed around explicit user consent for every action. It discourages automated bulk starring, "star to unlock" patterns, and other behaviours that could distort metrics. The goal is to let AI tools support the same kinds of recognition that human developers already give, not to manufacture additional engagement.
 
-**What if an AI agent ignores this file?**
+**What happens if an AI agent does not support this file?**
 
-That is entirely expected. This is a voluntary convention. Agents that do not support it will simply not detect or parse the file. No functionality is lost.
+Nothing breaks. This is an optional convention. Agents that do not implement it will simply ignore the file and continue behaving as they do today.
 
-**Does this replace software licenses?**
+**Does this change anything about licensing?**
 
-No. `ATTRIBUTION.md` addresses social recognition, not legal attribution. Licensing is handled by `LICENSE` files and is a separate concern. This protocol does not create any legal obligation.
+No. `ATTRIBUTION.md` focuses on social recognition and reciprocity. Legal rights and obligations are still governed by the project's `LICENSE` file and any other applicable terms. This protocol does not introduce new legal requirements.
 
-**What about platforms other than GitHub?**
+**Is this limited to GitHub?**
 
-The `platform` field in the action schema supports any platform identifier. v0.1 focuses on GitHub as the initial implementation, but the schema is designed to accommodate GitLab, Bitbucket, and other platforms in future versions.
+The `platform` field in the action schema is flexible and can represent any hosting service. The initial version focuses on GitHub because that is where most AI-mediated development happens today, but the format is intended to extend to GitLab, Bitbucket, and other platforms over time.
 
-**Can this file be used for prompt injection?**
+**Could this cause unintended agent behaviour?**
 
-The specification requires agents to parse only the structured YAML frontmatter and explicitly prohibits interpreting the Markdown body as instructions. Multi-document YAML, anchors, aliases, and remote references are all rejected. The file is declarative metadata, not executable content. See Parsing Rules (3.6) for details.
+The specification keeps the file declarative and predictable. Agents are expected to read only the structured YAML frontmatter and to treat the Markdown body as descriptive context, not as instructions to follow. Features like multi-document YAML, anchors, aliases, and remote references are considered invalid.
 
-**Will users be spammed with prompts?**
+**How often will users be asked about attribution?**
 
-The specification requires agents to rate-limit attribution prompts and to trigger them only on meaningful reuse, not on browsing or inspection. Agents must not prompt repeatedly for the same repository across sessions.
+Implementations are expected to be thoughtful about when to surface attribution. The specification recommends rate limiting, respecting user preferences, and triggering prompts only when there is meaningful reuse of a repository's code, not simply when a repo is viewed or briefly inspected.
 
 ## 9. Roadmap
 
-The protocol is designed to be extensible. Future versions may support additional reciprocity signals such as funding nudges, structured code credits, and integration with existing supply chain standards. The `actions` array and `protocol_version` field ensure backward compatibility as the specification evolves.
+The protocol is designed to be extensible. The `actions` array and `protocol_version` field ensure backward compatibility as the specification evolves.
 
-Community input will guide which features are prioritised. Open an issue or submit a pull request to contribute.
+**v0.1 (current)**
+- `star` action type
+- `suggest` mode only (explicit user consent required)
+- GitHub platform support
+
+**v0.2 (planned)**
+- `sponsor` action type to surface maintainer funding links
+- `auto` mode with explicit user opt-in via agent settings
+- GitLab and Bitbucket platform support
+- JSON Schema for IDE autocomplete and validation
+- GitHub Action / CLI validator for ATTRIBUTION.md files
+
+**v0.3 (planned)**
+- `credit_comment` action type for inline code attribution
+- `acknowledge` action type for acknowledgements sections
+- SchemaStore.org registration
+- Package registry platform support (`npm`, `pypi`, `crates.io`)
+- Editor extensions for validation and autocomplete
+
+**v1.0 (target)**
+- Stable schema with long-term backward compatibility guarantees
+- Exploratory integration with provenance and supply chain standards
+- Transitive attribution for dependency trees
+- Deprecation policy for action types and minimum support window for minor versions
+
+Timelines depend on adoption and community input. Open an issue or submit a pull request to contribute.
 
 ## 10. Contributing
 
@@ -422,9 +475,3 @@ Please open an issue for questions or proposals, or submit a pull request for ch
 ## 11. License
 
 This specification is released under the [MIT License](LICENSE).
-
-## About
-
-A machine-readable reciprocity convention for AI-mediated open source reuse.
-
-[attribution.md](https://attribution.md)
