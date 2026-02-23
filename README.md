@@ -468,9 +468,7 @@ Timelines depend on adoption and community input. Open an issue or submit a pull
 
 ## 10. Contributing
 
-This is an open convention. Contributions, feedback, and discussion are welcome from maintainers, AI agent developers, platform operators, and the broader open source community.
-
-Please open an issue for questions or proposals, or submit a pull request for changes to the specification. See [GOVERNANCE.md](GOVERNANCE.md) for versioning policy and decision-making guidelines.
+This is an open convention. See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines and [GOVERNANCE.md](GOVERNANCE.md) for decision-making policy.
 
 ## 11. License
 
