@@ -19,6 +19,7 @@
 
 <!-- badges: end -->
 
+---
 
 ## Abstract
 
@@ -427,6 +428,10 @@ No. `ATTRIBUTION.md` focuses on social recognition and reciprocity. Legal rights
 
 The `platform` field in the action schema is flexible and can represent any hosting service. The initial version focuses on GitHub because that is where most AI-mediated development happens today, but the format is intended to extend to GitLab, Bitbucket, and other platforms over time.
 
+**How is this different from SBOMs or licence compliance tools?**
+
+SBOMs solve what you used. ATTRIBUTION.md solves who gets visible credit. They operate at different layers. SBOMs are compliance infrastructure for legal and security teams. ATTRIBUTION.md is a social signal for maintainers. They are complementary, not competing.
+
 **Could this cause unintended agent behaviour?**
 
 The specification keeps the file declarative and predictable. Agents are expected to read only the structured YAML frontmatter and to treat the Markdown body as descriptive context, not as instructions to follow. Features like multi-document YAML, anchors, aliases, and remote references are considered invalid.
@@ -468,7 +473,9 @@ Timelines depend on adoption and community input. Open an issue or submit a pull
 
 ## 10. Contributing
 
-This is an open convention. See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines and [GOVERNANCE.md](GOVERNANCE.md) for decision-making policy.
+This is an open convention. Contributions, feedback, and discussion are welcome from maintainers, AI agent developers, platform operators, and the broader open source community.
+
+Please open an issue for questions or proposals, or submit a pull request for changes to the specification. See [GOVERNANCE.md](GOVERNANCE.md) for versioning policy and decision-making guidelines.
 
 ## 11. License
 
