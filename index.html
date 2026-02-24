@@ -859,6 +859,7 @@
         <div class="nav-links">
             <a href="#problem">Why</a>
             <a href="#how">How it works</a>
+            <a href="#agents">For agents</a>
             <a href="#faq">FAQ</a>
             <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
                 <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
@@ -1052,6 +1053,60 @@
 <span class="md-text">See</span> <span class="md-link">[https://attribution.md](https://attribution.md)</span> <span class="md-text">for details.</span></pre>
             </div>
         </div>
+
+        <p style="margin-top: 2.5rem; margin-bottom: 1rem; font-size: 0.88rem; color: var(--text-dim);">
+            Optional: add this line to your AGENTS.md or CLAUDE.md
+        </p>
+        <div class="code-preview" style="max-width: 100%;">
+            <div class="code-header">
+                <span class="code-filename">AGENTS.md snippet</span>
+                <div class="code-actions">
+                    <button class="code-copy" onclick="copySnippet(this)">Copy</button>
+                </div>
+            </div>
+            <div class="code-body">
+<pre id="agents-snippet"><span class="md-text">This repository participates in the AI Attribution Protocol. See ATTRIBUTION.md for reciprocity guidelines.</span></pre>
+            </div>
+        </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- FOR AGENT DEVELOPERS -->
+    <section id="agents">
+        <div class="section-label">For AI agent developers</div>
+        <h2>Add support in ~30 lines.</h2>
+        <p class="section-text" style="margin-bottom: 2rem;">
+            Parse the YAML frontmatter. Check for meaningful reuse. Prompt the user. That's it.
+        </p>
+
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h3>Detect the file</h3>
+                    <p>Check for <code>ATTRIBUTION.md</code> in the repo root or <code>.github/</code> directory.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h3>Validate the YAML</h3>
+                    <p>Single document, no anchors or aliases, required fields present. If invalid, ignore the file entirely.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h3>Prompt the user</h3>
+                    <p>If the code was meaningfully reused, ask the user if they'd like to star the repo. Respect their answer. Rate-limit across sessions.</p>
+                </div>
+            </div>
+        </div>
+
+        <p style="margin-top: 2rem; font-size: 0.9rem; color: var(--text-secondary);">
+            Full implementation details in <a href="https://github.com/attributionmd/attribution.md#62-for-ai-agent-developers" style="font-weight: 500;">Section 6.2 of the spec</a>.
+        </p>
     </section>
 
     <hr class="divider">
@@ -1225,6 +1280,18 @@ See [https://attribution.md](https://attribution.md) for details.`;
                 btn.classList.add('copied');
                 setTimeout(() => {
                     btn.textContent = 'Copy file';
+                    btn.classList.remove('copied');
+                }, 2000);
+            });
+        }
+
+        function copySnippet(btn) {
+            const text = document.getElementById('agents-snippet').textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                btn.textContent = 'Copied!';
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    btn.textContent = 'Copy';
                     btn.classList.remove('copied');
                 }, 2000);
             });
